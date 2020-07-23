@@ -36,6 +36,9 @@
                 <%= agenda.title %>
                 <i class="right fa fa-angle-left"></i>
               </p>
+              <!-- ボタン配置 -->
+              <%= link_to I18n.t('views.button.delete'),team_agendas_path(@working_team),
+                 method:  :destroy, class: 'btn btn-sm btn-danger' %>
             </a>
             <ul class="nav nav-treeview" style="display: block;">
               <% agenda.articles.each do |article| %>
