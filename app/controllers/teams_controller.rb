@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy switch]
   before_action :check_owner, only:[:edit]
 
   def index
@@ -48,6 +48,15 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
+  #switch 追加したものの...
+  def switch
+   if @team.update(team_params)
+      redirect_to @team, notice: I18n.t('views.messages.switch_teamleader')
+    else
+      render :show
+    end
+  end
+
   private
 
   def set_team
@@ -63,4 +72,5 @@ class TeamsController < ApplicationController
       redirect_to @team, notice: I18n.t('views.messages.can_edit_the_leader_only')
     end
   end
+
 end
