@@ -27,11 +27,7 @@ class AgendasController < ApplicationController
     redirect_to dashboard_url, notice: I18n.t('views.messages.delete_agenda') 
   end
 
-
-
-
   private
-
   def set_agenda
     @agenda = Agenda.find(params[:id])
   end

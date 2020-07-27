@@ -48,9 +48,12 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
-  #switch 追加したものの...
   def switch
-   if @team.update(team_params)
+    #@team.owner_id = params[:assign_user_id]
+    @next_leader = User.find(params[:assign_user_id])
+    @team.owner_id = @next_leader.id
+    if @team.update(team_params)
+      SwitchLeaderMailer.contact_mail(@next_leader).deliver 
       redirect_to @team, notice: I18n.t('views.messages.switch_teamleader')
     else
       render :show
@@ -64,7 +67,7 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
+    params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id assign_user_id]
   end
 
   def check_owner
