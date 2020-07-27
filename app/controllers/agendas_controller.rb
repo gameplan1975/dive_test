@@ -22,9 +22,10 @@ class AgendasController < ApplicationController
   end
 
   def destroy
-    if current_user.id != @agenda.user_id && current_user.id != @agenda.team.owner_id destroy
+    if current_user.id != @agenda.user_id && current_user.id != @agenda.team.owner_id then
       render :dashboard_url
     end
+    DeleteTeamMailer.delete_team_mail(@agenda.team.assigns).deliver
     @agenda.destroy
     redirect_to dashboard_url, notice: I18n.t('views.messages.delete_agenda') 
   end
