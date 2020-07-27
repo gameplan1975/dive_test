@@ -1,0 +1,2 @@
+class DeleteTeamMailer < ApplicationMailer
+end
