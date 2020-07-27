@@ -32,11 +32,13 @@
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
               <i class="fa fa-circle-o nav-icon"></i>
-              <p>
-                <%= agenda.title %>
+              <p><%= agenda.title %></p>
                 <i class="right fa fa-angle-left"></i>
-              </p>
             </a>
+            <!-- ボタン配置 -->
+            <% if current_user.id == agenda.user.id || current_user.id == agenda.team.owner_id %>
+              <%= link_to I18n.t('views.button.delete'),agenda_path(agenda), method: :delete, class: 'btn btn-sm btn-danger' %>
+            <% end %>
             <ul class="nav nav-treeview" style="display: block;">
               <% agenda.articles.each do |article| %>
                 <li class="nav-item">
