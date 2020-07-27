@@ -22,7 +22,6 @@ class AgendasController < ApplicationController
   end
 
   def destroy
-    ＠agenda = Agenda.
     @agenda.destroy
     redirect_to dashboard_url, notice: I18n.t('views.messages.delete_agenda') 
   end
