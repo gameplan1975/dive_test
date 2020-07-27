@@ -53,7 +53,7 @@ class TeamsController < ApplicationController
     @next_leader = User.find(params[:assign_user_id])
     @team.owner_id = @next_leader.id
     if @team.update(team_params)
-      SwitchLeaderMailer.contact_mail(@next_leader).deliver 
+      SwitchLeaderMailer.switch_leader_mail(@next_leader).deliver 
       redirect_to @team, notice: I18n.t('views.messages.switch_teamleader')
     else
       render :show
